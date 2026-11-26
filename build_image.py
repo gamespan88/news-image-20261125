@@ -9,6 +9,8 @@ against wire reporting of the day; the drawing is original.
 Run at build time only:  python3 build_image.py  ->  entry.png
 The shipped program (main.py) merely copies entry.png to /output.
 """
+import math
+
 from PIL import Image, ImageDraw, ImageFont
 
 W, H = 1024, 1024
@@ -302,8 +304,16 @@ def scene_station(d, x, y, w, h):
     d.rectangle([x, y, x + w, y + h], fill=(8, 14, 34))
     for sx, sy in [(30, 14), (80, 30), (150, 10), (230, 22), (290, 12), (60, 44), (200, 40)]:
         d.ellipse([x + sx, y + sy, x + sx + 2, y + sy + 2], fill=(220, 228, 240))
-    d.ellipse([x - 50, y + h - 30, x + w + 50, y + h + 130], fill=(16, 52, 110))
-    d.arc([x - 50, y + h - 30, x + w + 50, y + h + 130], 180, 360, fill=(110, 180, 240), width=3)
+    cx_e, cy_e = x + w / 2, y + h + 50
+    rx, ry = w / 2 + 50, 80
+    cap = []
+    for a in range(180, 361, 4):
+        px = cx_e + rx * math.cos(math.radians(a))
+        py = cy_e + ry * math.sin(math.radians(a))
+        if py <= y + h:
+            cap.append((min(max(px, x), x + w), py))
+    d.polygon(cap + [(x + w, y + h), (x, y + h)], fill=(16, 52, 110))
+    d.line(cap, fill=(110, 180, 240), width=3)
     cx, cy = x + w // 2, y + h // 2 - 8
     d.rectangle([cx - 52, cy - 9, cx + 52, cy + 9], fill=(216, 220, 226), outline=(90, 96, 104))
     d.rectangle([cx - 8, cy - 20, cx + 8, cy + 20], fill=(196, 200, 206), outline=(90, 96, 104))
