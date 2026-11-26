@@ -317,7 +317,7 @@ def scene_station(d, x, y, w, h):
     d.rectangle([cx - 71, cy - 3, cx - 65, cy + 3], fill=(13, 110, 60))
     d.polygon([(cx - 74, cy - 6), (cx - 82, cy), (cx - 74, cy + 6)], fill=(198, 146, 14))
     d.rectangle([cx + 54, cy - 4, cx + 66, cy + 4], fill=(178, 32, 40))
-    d.text((cx - 30, cy + 26), "TIANGONG", font=F(SANSB, 10), fill=(200, 220, 250))
+
 
 
 def scene_hormuz(d, x, y, w, h):
