@@ -121,9 +121,9 @@ TILES_SMALL = [
      "The wage board lifts the minimum from 12,500 to 17,000 taka ($139) after "
      "weeks of protests."),
     ("BOGOR, INDONESIA", "DISASTER", "ASIA", "REPORTED", "RESCUE AT 100 M",
-     "Rescuers recover bodies in flooded gold mine",
-     "26 wildcat miners remain trapped 100 m under Pongkor since Monday's flood; "
-     "rescuers have pulled out three bodies."),
+     "Rescuers hunt for miners in flooded gold mine",
+     "26 to 29 wildcat miners unaccounted for, 100 m under Pongkor since "
+     "Monday's flood; shafts are narrow."),
     ("CARTAGENA, COLOMBIA", "CRIME", "AMERICAS", "CONFIRMED", "ALL FREED",
      "Forces storm supermarket, free all hostages",
      "Forces stormed the Éxito store at dawn, ending a 17-hour siege; one gunman "
@@ -163,7 +163,7 @@ LIST_ITEMS = [
     ("HODEIDAH", "MIDDLE EAST", "Coalition strikes Hodeidah port, Saada, Amran"),
     ("SHANGHAI", "ASIA", "Party chief Chen Jining probed in graft sweep"),
     ("NEW DELHI", "ASIA", "India condemns Riyadh attack; 2 Indians hurt"),
-    ("TAIPEI", "ASIA", "Comedian tours with guards amid China anger"),
+    ("TAITUNG", "ASIA", "M5.3 quake strikes off Taiwan; no damage (USGS)"),
     ("MYANMAR", "ASIA", "Amputee rebel vows to fight on (Reuters)"),
     ("GENEVA", "GLOBAL", "WFP: wars put food aid for millions at risk"),
 ]
@@ -268,6 +268,12 @@ def scene_ship(d, x, y, w, h):
     d.rectangle([hx + 200, hy - 22, hx + 208, hy - 16], fill=(16, 44, 74))
     rates = [("CHINA 20%", (178, 32, 40)), ("INDIA 25%", (180, 83, 9)),
              ("EU 15%", (37, 99, 235)), ("VIETNAM 35%", (124, 58, 237))]
+    for gx, gy in [(x + 30, y + 14), (x + 52, y + 9), (x + 150, y + 12)]:
+        d.arc([gx, gy, gx + 10, gy + 6], 200, 330, fill=(230, 240, 248), width=1)
+        d.arc([gx + 8, gy, gx + 18, gy + 6], 200, 330, fill=(230, 240, 248), width=1)
+    d.polygon([(x + 8, y + h - 26), (x + 12, y + h - 21), (x + 44, y + h - 21), (x + 40, y + h - 26)],
+              fill=(52, 58, 64))
+    d.rectangle([x + 16, y + h - 31, x + 34, y + h - 26], fill=(96, 104, 112))
     fx = x + w - 86
     for i, (s, col) in enumerate(rates):
         yy = y + 24 + i * 16
@@ -284,6 +290,11 @@ def scene_chart(d, x, y, w, h):
     pts = [(0, 18), (30, 22), (58, 16), (86, 26), (112, 38), (140, 44),
            (168, 62), (196, 74), (220, 96)]
     P = [(x + 12 + px, y + 8 + py) for px, py in pts]
+    d.polygon(P + [(P[-1][0], y + h), (P[0][0], y + h)], fill=(46, 18, 22))
+    pts2 = [(0, 30), (30, 33), (58, 29), (86, 36), (112, 44), (140, 48),
+            (168, 58), (196, 64), (220, 76)]
+    P2 = [(x + 12 + px, y + 8 + py) for px, py in pts2]
+    d.line(P2, fill=(240, 150, 90), width=2)
     d.line(P, fill=(240, 70, 70), width=3)
     for px, py in P:
         d.ellipse([px - 2, py - 2, px + 2, py + 2], fill=(240, 70, 70))
@@ -314,6 +325,9 @@ def scene_station(d, x, y, w, h):
             cap.append((min(max(px, x), x + w), py))
     d.polygon(cap + [(x + w, y + h), (x, y + h)], fill=(16, 52, 110))
     d.line(cap, fill=(110, 180, 240), width=3)
+    for lx2, ly2 in [(x + 52, y + h - 12), (x + 96, y + h - 7), (x + w - 88, y + h - 10),
+                     (x + w - 52, y + h - 6), (x + 150, y + h - 13)]:
+        d.ellipse([lx2, ly2, lx2 + 3, ly2 + 2], fill=(255, 214, 120))
     cx, cy = x + w // 2, y + h // 2 - 8
     d.rectangle([cx - 52, cy - 9, cx + 52, cy + 9], fill=(216, 220, 226), outline=(90, 96, 104))
     d.rectangle([cx - 8, cy - 20, cx + 8, cy + 20], fill=(196, 200, 206), outline=(90, 96, 104))
@@ -325,6 +339,8 @@ def scene_station(d, x, y, w, h):
         d.rectangle([min(xa, xb), cy - 2, max(xa, xb), cy + 2], fill=(150, 154, 160))
     d.rectangle([cx - 74, cy - 6, cx - 54, cy + 6], fill=(240, 242, 244), outline=(90, 96, 104))
     d.rectangle([cx - 71, cy - 3, cx - 65, cy + 3], fill=(13, 110, 60))
+    d.line([cx + 44, cy - 4, cx + 66, cy - 16], fill=(150, 158, 168), width=3)
+    d.line([cx + 66, cy - 16, cx + 78, cy - 8], fill=(150, 158, 168), width=2)
     d.polygon([(cx - 74, cy - 6), (cx - 82, cy), (cx - 74, cy + 6)], fill=(198, 146, 14))
     d.rectangle([cx + 54, cy - 4, cx + 66, cy + 4], fill=(178, 32, 40))
 
@@ -345,6 +361,9 @@ def scene_hormuz(d, x, y, w, h):
         d.line([route[i], route[i + 1]], fill=(255, 220, 90), width=2)
     for mx, my in [(x + w * 0.44, y + h * 0.55), (x + w * 0.63, y + h * 0.42)]:
         d.ellipse([mx - 5, my - 5, mx + 5, my + 5], fill=(20, 24, 30), outline=(255, 120, 60), width=2)
+    d.ellipse([x + w - 44, y + 5, x + w - 28, y + 21], fill=(250, 205, 110))
+    d.polygon([(x + w * 0.16, y + h * 0.72), (x + w * 0.24, y + h * 0.66),
+               (x + w * 0.30, y + h * 0.74), (x + w * 0.20, y + h * 0.78)], fill=(188, 168, 122))
     tx, ty = x + w * 0.50, y + h * 0.30
     d.polygon([(tx, ty + 10), (tx + 5, ty + 16), (tx + 52, ty + 16), (tx + 47, ty + 10)], fill=(40, 44, 50))
     d.rectangle([tx + 10, ty + 3, tx + 38, ty + 10], fill=(120, 128, 136))
@@ -361,6 +380,12 @@ def scene_refinery(d, x, y, w, h):
     for cx0 in (88, 116, 168):
         d.rectangle([x + cx0, y + h - 26, x + cx0 + 24, y + h - 12], fill=(176, 180, 186), outline=(96, 100, 106))
         d.arc([x + cx0, y + h - 32, x + cx0 + 24, y + h - 20], 180, 360, fill=(96, 100, 106))
+    for sx2, sy2 in [(x + 52, y + h - 48), (x + 144, y + h - 44)]:
+        d.ellipse([sx2, sy2, sx2 + 17, sy2 + 7], fill=(122, 118, 112))
+        d.ellipse([sx2 + 11, sy2 - 4, sx2 + 32, sy2 + 4], fill=(142, 138, 132))
+    d.line([x + 8, y + h - 19, x + w - 8, y + h - 19], fill=(90, 94, 100), width=2)
+    for px2 in range(x + 26, x + w - 16, 38):
+        d.line([px2, y + h - 19, px2, y + h - 13], fill=(90, 94, 100), width=2)
     fx = x + 226
     d.line([fx, y + h - 12, fx, y + 12], fill=(70, 74, 80), width=3)
     d.polygon([(fx, y + 12), (fx + 5, y + 2), (fx + 10, y + 12)], fill=(255, 130, 40))
@@ -373,6 +398,7 @@ def scene_refinery(d, x, y, w, h):
 
 def scene_scales(d, x, y, w, h):
     d.rectangle([x, y, x + w, y + h], fill=(232, 226, 208))
+    d.polygon([(x + 16, y + 9), (x + w // 2, y + 1), (x + w - 16, y + 9)], fill=(186, 176, 148))
     for cx0 in (26, 210):
         d.rectangle([x + cx0, y + 10, x + cx0 + 10, y + h - 8], fill=(168, 158, 130))
         d.rectangle([x + cx0 - 3, y + 6, x + cx0 + 13, y + 11], fill=(140, 130, 100))
@@ -400,6 +426,14 @@ def scene_truck(d, x, y, w, h):
         d.ellipse([wx, ty + 7, wx + 11, ty + 18], fill=(20, 22, 26), outline=(120, 124, 130))
     d.polygon([(tx + 26, ty - 2), (tx + 36, ty - 18), (tx + 46, ty - 2)], fill=(255, 120, 40))
     d.polygon([(tx + 31, ty - 2), (tx + 37, ty - 12), (tx + 43, ty - 2)], fill=(255, 180, 60))
+    cx9 = x + 178
+    d.polygon([(cx9, y + h - 22), (cx9 + 8, y + h - 28), (cx9 + 30, y + h - 28),
+               (cx9 + 38, y + h - 22), (cx9 + 38, y + h - 16), (cx9, y + h - 16)], fill=(88, 60, 60))
+    d.rectangle([cx9 + 12, y + h - 27, cx9 + 24, y + h - 23], fill=(170, 205, 225))
+    for wx in (cx9 + 7, cx9 + 29):
+        d.ellipse([wx, y + h - 17, wx + 7, y + h - 10], fill=(20, 22, 26))
+    for kx in (x + 152, x + 228):
+        d.polygon([(kx, y + h - 3), (kx + 3, y + h - 10), (kx + 6, y + h - 3)], fill=(255, 130, 40))
     for gx in range(5):
         d.line([tx + 18 + gx * 8, ty - 16 - gx * 2, tx + 22 + gx * 8, ty - 26 - gx * 2], fill=(110, 112, 118), width=2)
 
@@ -412,12 +446,16 @@ def scene_house(d, x, y, w, h):
     d.rectangle([hx + 30, hy + 10, hx + 44, hy + 26], fill=(110, 80, 50))
     d.rectangle([hx + 8, hy + 8, hx + 20, hy + 18], fill=(250, 210, 90), outline=(120, 124, 130))
     d.rectangle([hx + 54, hy + 8, hx + 66, hy + 18], fill=(250, 210, 90), outline=(120, 124, 130))
-    fx, fy = x + 150, y + 16
+    d.line([x + 16, y + 20, x + 16, y + h - 4], fill=(80, 88, 96), width=2)
+    d.ellipse([x + 12, y + 15, x + 20, y + 23], fill=(255, 214, 120), outline=(80, 88, 96))
+    for fx0 in range(x + 26, x + w - 8, 16):
+        d.line([fx0, y + h - 3, fx0 + 9, y + h - 3], fill=(120, 128, 110), width=2)
+    fx, fy = x + 198, y + 8
     d.polygon([(fx, fy + 22), (fx + 8, fy + 6), (fx + 12, fy + 14), (fx + 17, fy + 2),
                (fx + 22, fy + 14), (fx + 27, fy + 7), (fx + 30, fy + 22)], fill=(255, 130, 40))
     d.polygon([(fx + 9, fy + 22), (fx + 14, fy + 12), (fx + 20, fy + 22)], fill=(255, 190, 70))
-    d.text((x + 138, y + 44), "£2,166", font=F(SERIF, 17), fill=(178, 32, 40))
-    d.text((x + 138, y + 63), "from 1 JAN", font=F(SANSB, 8), fill=INK)
+    d.text((x + 126, y + 10), "£2,166", font=F(SERIF, 16), fill=(178, 32, 40))
+    d.text((x + 128, y + 30), "from 1 JAN", font=F(SANSB, 8), fill=INK)
 
 
 def scene_factory(d, x, y, w, h):
@@ -430,7 +468,11 @@ def scene_factory(d, x, y, w, h):
         for c in range(6):
             d.rectangle([x + 28 + c * 20, y + h - 28 + r * 11, x + 42 + c * 20, y + h - 21 + r * 11],
                         fill=(250, 220, 120))
-    d.rectangle([x + 158, y + h - 52, x + 168, y + h - 8], fill=(120, 124, 120))
+    d.rectangle([x + 158, y + h - 48, x + 168, y + h - 8], fill=(120, 124, 120))
+    d.ellipse([x + 152, y + 1, x + 176, y + 9], fill=(168, 176, 168))
+    d.ellipse([x + 164, y + 0, x + 190, y + 7], fill=(186, 194, 186))
+    for cdx in range(x + 34, x + 140, 13):
+        d.ellipse([cdx, y + h - 7, cdx + 4, y + h - 3], fill=(60, 64, 60))
     d.text((x + 178, y + 12), "+36%", font=F(SERIF, 20), fill=(13, 110, 100))
     d.text((x + 178, y + 36), "TK 17,000", font=F(SANSB, 10), fill=INK)
     d.line([x + 182, y + 54, x + 226, y + 54], fill=(13, 110, 100), width=2)
@@ -451,6 +493,10 @@ def scene_mine(d, x, y, w, h):
     d.text((x + 196, y + 50), "FLOODED", font=F(SANSB, 8), fill=(240, 230, 200))
     d.polygon([(x + 66, y + 12), (x + 74, y + 4), (x + 82, y + 12)], fill=(178, 32, 40))
     d.text((x + 70, y + 13), "!", font=F(SANSB, 10), fill=WHITE)
+    for rx0, ry0 in [(x + 10, y + 28), (x + 23, y + 32)]:
+        d.ellipse([rx0, ry0, rx0 + 5, ry0 + 5], fill=(250, 200, 90), outline=(40, 34, 26))
+        d.line([rx0 + 2, ry0 + 5, rx0 + 2, ry0 + 13], fill=(40, 34, 26), width=2)
+        d.ellipse([rx0 + 6, ry0 + 2, rx0 + 8, ry0 + 4], fill=(255, 240, 170))
 
 
 def scene_store(d, x, y, w, h):
@@ -463,6 +509,12 @@ def scene_store(d, x, y, w, h):
         d.rectangle([x + 26 + c * 42, y + 42, x + 58 + c * 42, y + 56], fill=(170, 205, 225),
                     outline=(110, 114, 120))
     d.rectangle([x + w / 2 - 12, y + 42, x + w / 2 + 12, y + h - 6], fill=(90, 96, 104))
+    d.rectangle([x + w - 74, y + h - 15, x + w - 34, y + h - 7], fill=(36, 52, 96))
+    d.rectangle([x + w - 66, y + h - 19, x + w - 44, y + h - 15], fill=(36, 52, 96))
+    d.rectangle([x + w - 60, y + h - 21, x + w - 54, y + h - 19], fill=(240, 70, 70))
+    d.rectangle([x + w - 52, y + h - 21, x + w - 47, y + h - 19], fill=(90, 150, 250))
+    for cdx in (x + 96, x + 108, x + 158, x + 170):
+        d.ellipse([cdx, y + h - 11, cdx + 4, y + h - 7], fill=(70, 74, 80))
     for px in (x + 40, x + w - 52):
         d.polygon([(px, y + h - 6), (px + 5, y + h - 20), (px + 10, y + h - 6)], fill=(40, 60, 90))
 
