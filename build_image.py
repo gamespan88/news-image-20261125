@@ -3,7 +3,7 @@
 Draws "THE WORLD IN ONE DAY" for Wednesday 25 November 2026 as a dense
 tabloid page: masthead, giant date, numbers strip, region tabs, a UTC
 timeline, eleven numbered illustrated tiles, a numbered world map, a
-24-item numbered list and a date-check box. Every story was verified
+34-item numbered list and a date-check box. Every story was verified
 against wire reporting of the day; the drawing is original.
 
 Run at build time only:  python3 build_image.py  ->  entry.png
@@ -100,16 +100,16 @@ TILES_SMALL = [
      "2m-barrel supertanker. Unverified."),
     ("RAS TANURA", "SAUDI ARABIA", "MIDDLE EAST", "REPORTED", "REFINERY CLAIMED HIT",
      "Houthis claim strike on biggest Saudi refinery",
-     "The claim names Ras Tanura, the kingdom's largest refinery; Saudis downed "
-     "four drones over the port."),
+     "The claim names Ras Tanura, the kingdom's largest refinery; satellite images "
+     "show thick black smoke over it."),
     ("JERUSALEM", "JUSTICE", "MIDDLE EAST", "OFFICIAL", "DROP CASE 4000",
      "Judges urge dropping Netanyahu bribery charge",
-     "The panel cites steep legal hurdles in Case 4000 and urges prosecutors to "
-     "drop the bribery count."),
+     "The panel cites steep legal hurdles in Case 4000, questions a second case "
+     "and urges the bribery count be dropped."),
     ("CAIRO", "DISASTER", "AFRICA", "OFFICIAL", "30+ DEAD",
      "Fuel tanker blaze kills at least 30 in Cairo",
      "An overturned fuel truck exploded in traffic on the ring road in Imbaba; "
-     "at least 21 more people were injured."),
+     "27 vehicles burned, 25 people injured."),
     ("LONDON", "ENERGY", "EUROPE", "OFFICIAL", "£2,166 · FROM 1 JAN",
      "UK energy bills to jump 26% on gas war shock",
      "Ofgem lifts the cap from £1,723 to £2,166 a year from January, blaming "
@@ -130,30 +130,40 @@ TILES_SMALL = [
 
 # List: (place, region, text)
 LIST_ITEMS = [
-    ("GAZA CITY", "MIDDLE EAST", "Israeli strike kills Hamas security chief (Reuters)"),
+    ("GAZA CITY", "MIDDLE EAST", "Strike kills Hamas security chief (Reuters)"),
     ("WARSAW", "EUROPE", "Poland to build no-fly zone on Ukraine border"),
     ("SAMARA", "EUROPE", "Ukraine drones set two Volga refineries ablaze"),
     ("BLUE NILE", "AFRICA", "Sudan RSF drone attacks kill at least 19"),
     ("WASHINGTON", "AMERICAS", "US Q3 GDP revised up to 4.3% (BEA)"),
     ("WASHINGTON", "AMERICAS", "CIA–ODNI unclassified systems breached"),
     ("WASHINGTON", "AMERICAS", "Trump: Iran war funding secured to January"),
-    ("CANBERRA", "OCEANIA", "Solomons sign Australia pact — A$740m, no bases"),
+    ("CANBERRA", "OCEANIA", "Solomons–Australia pact: A$740m, no bases"),
     ("PYONGYANG", "ASIA", "North Korea expels Switzerland's envoy"),
     ("BAGHDAD", "MIDDLE EAST", "Top court lets federal troops guard oil, borders"),
     ("MISSISSIPPI", "AMERICAS", "All six bodies recovered from Cessna crash"),
-    ("IOWA", "AMERICAS", "Army detonates 5 tonnes of lead azide"),
+    ("IOWA", "AMERICAS", "Army detonates 4.4 t lead azide; EPA clears air"),
     ("KYIV", "EUROPE", "Ukraine needs €115bn outside financing for 2027"),
     ("LEAKED DATA", "EUROPE", "Leak puts Russian dead in Ukraine at 490,334"),
     ("MADRID", "EUROPE", "Far right leads polls before Sunday snap vote"),
-    ("UNITED NATIONS", "GLOBAL", "47,000 killed by kin in 2025 — UN day brief"),
+    ("UNITED NATIONS", "GLOBAL", "47,000 killed by kin in 2025 (UN brief)"),
     ("HONG KONG", "ASIA", "Survivors mark one year since tower fire"),
     ("MARYLAND", "AMERICAS", "Ábrego García reaches Spain; case closed"),
     ("BRUSSELS", "EUROPE", "EU unveils a €50bn quantum fund (AFP)"),
     ("LISBON", "EUROPE", "Champions League: Sporting 2–2 Man Utd"),
     ("LOS ANGELES", "AMERICAS", "Lakers beat Jazz behind Dončić's 28 points"),
-    ("US NORTHEAST", "AMERICAS", "Thanksgiving storm threatens 81m travellers"),
-    ("BUDAPEST", "EUROPE", "Hungary–Ukraine 'fresh start' trade talks"),
+    ("US NORTHEAST", "AMERICAS", "Thanksgiving storm threatens 81m trips"),
+    ("BUDAPEST", "EUROPE", "Hungary–Ukraine 'fresh start' talks"),
     ("GAZA", "MIDDLE EAST", "Health officials warn meningitis spreads"),
+    ("NEW YORK", "AMERICAS", "Dow erases 1,100-point fall, closes +0.3%"),
+    ("WASHINGTON", "AMERICAS", "US tells citizens to leave Iran at once"),
+    ("LONDON", "EUROPE", "UK warns firms of Russian sabotage threat (MI5)"),
+    ("BENGHAZI", "AFRICA", "Ukraine drones sink Russian corvette; 2 die"),
+    ("HODEIDAH", "MIDDLE EAST", "Coalition strikes Hodeidah port, Saada, Amran"),
+    ("SHANGHAI", "ASIA", "Party chief Chen Jining probed in graft sweep"),
+    ("NEW DELHI", "ASIA", "India condemns Riyadh attack; 2 Indians hurt"),
+    ("TAIPEI", "ASIA", "Comedian tours with guards amid China anger"),
+    ("MYANMAR", "ASIA", "Amputee rebel vows to fight on (Reuters)"),
+    ("GENEVA", "GLOBAL", "WFP: wars put food aid for millions at risk"),
 ]
 
 KPIS = [("35%", "top proposed US tariff — on Vietnam"),
@@ -164,8 +174,9 @@ KPIS = [("35%", "top proposed US tariff — on Vietnam"),
         ("+36%", "Dhaka garment minimum pay rise")]
 
 TIMELINE = [("00:18", "Shenzhou-24 lifts off"), ("03:56", "Tiangong docking"),
-            ("06:30", "Kospi −6.2% close"), ("13:30", "US GDP 4.3%"),
-            ("15:00", "US tariffs proposed"), ("19:28", "Netanyahu case ruling")]
+            ("09:13", "US leave-Iran alert"), ("13:30", "US GDP 4.3%"),
+            ("16:59", "Ras Tanura claim"), ("19:28", "Netanyahu ruling"),
+            ("21:00", "Dow erases 1,100 pts")]
 
 # ------------------------------------------------------------- continents
 # Coarse polygons in (lon, lat); rasterised to a dot matrix for the map.
@@ -303,6 +314,7 @@ def scene_station(d, x, y, w, h):
         xa, xb = cx + sgn * 52, cx + sgn * 56
         d.rectangle([min(xa, xb), cy - 2, max(xa, xb), cy + 2], fill=(150, 154, 160))
     d.rectangle([cx - 74, cy - 6, cx - 54, cy + 6], fill=(240, 242, 244), outline=(90, 96, 104))
+    d.rectangle([cx - 71, cy - 3, cx - 65, cy + 3], fill=(13, 110, 60))
     d.polygon([(cx - 74, cy - 6), (cx - 82, cy), (cx - 74, cy + 6)], fill=(198, 146, 14))
     d.rectangle([cx + 54, cy - 4, cx + 66, cy + 4], fill=(178, 32, 40))
     d.text((cx - 30, cy + 26), "TIANGONG", font=F(SANSB, 10), fill=(200, 220, 250))
@@ -316,7 +328,7 @@ def scene_hormuz(d, x, y, w, h):
                (x + w * 0.74, y + h * 0.56), (x + w, y + h * 0.70), (x + w, y + h)],
               fill=(206, 188, 140))
     d.text((x + 36, y + 6), "IRAN", font=F(SANSB, 9), fill=(90, 74, 40))
-    d.text((x + w - 42, y + h - 34), "OMAN", font=F(SANSB, 9), fill=(90, 74, 40))
+    d.text((x + w - 40, y + h - 15), "OMAN", font=F(SANSB, 8), fill=(90, 74, 40))
     route = [(x + 14, y + h - 12), (x + w * 0.36, y + h * 0.60), (x + w * 0.55, y + h * 0.46),
              (x + w * 0.82, y + h * 0.30)]
     for i in range(len(route) - 1):
@@ -516,13 +528,13 @@ def main():
     # Masthead
     d.rectangle([0, 0, W, 30], fill=NAVY)
     d.text((12, 7), "THE WORLD IN ONE DAY", font=F(SANSB, 15), fill=WHITE)
-    right = "35 STORIES · 8 REGIONS · 11 ILLUSTRATED · EVERY ONE FIRST REPORTED WED 25 NOV 2026"
+    right = "45 STORIES · 8 REGIONS · 11 ILLUSTRATED · EVERY ONE FIRST REPORTED WED 25 NOV 2026"
     d.text((W - 12 - d.textlength(right, font=F(SANSB, 9)), 10), right, font=F(SANSB, 9),
            fill=(255, 214, 90))
     # Date + sub-lead
     d.text((12, 38), "Wednesday 25 November 2026", font=F(SERIF, 47), fill=INK)
-    d.text((12, 94), "America taxes 14 economies · Asia's chip rally breaks · a first foreign "
-                     "guest aboard Tiangong — and mines in the Strait of Hormuz",
+    d.text((12, 94), "America taxes 14 economies · Asia's chip rally breaks · mines in the Strait "
+                     "of Hormuz — and Wall Street erases a 1,100-point fall",
            font=F(SERIF, 13), fill=RED)
     # KPI strip
     ky = 116
@@ -536,8 +548,8 @@ def main():
         text_block(d, kx, ky + 27, lab, F(SANS, 8), GREY, kw - 14, 10)
     # Region tabs
     ty = 158
-    tabs = [("EUROPE", 9), ("AMERICAS", 10), ("MIDDLE EAST", 6), ("ASIA", 5),
-            ("AFRICA", 2), ("OCEANIA", 1), ("GLOBAL", 1), ("SPACE", 1)]
+    tabs = [("AMERICAS", 12), ("EUROPE", 10), ("ASIA", 9), ("MIDDLE EAST", 7),
+            ("AFRICA", 3), ("GLOBAL", 2), ("OCEANIA", 1), ("SPACE", 1)]
     tx = 12
     for reg, cnt in tabs:
         label = f"{reg} {cnt}"
@@ -571,23 +583,29 @@ def main():
     draw_map(d, 12, by, 452, 258)
     lx = 476
     d.text((lx, by + 2), "ALSO ON WEDNESDAY", font=F(SANSB, 12), fill=NAVY)
-    d.text((lx + 168, by + 4), "— 24 MORE STORIES, NUMBERED & COLOUR-MATCHED BY REGION",
+    d.text((lx + 168, by + 4), "— 34 MORE STORIES, NUMBERED & COLOUR-MATCHED BY REGION",
            font=F(SANS, 8), fill=GREY)
     d.line([lx, by + 20, W - 12, by + 20], fill=LINE)
     colw = (W - 12 - lx - 14) // 2
+    pf, tf = F(SANSB, 8), F(SANS, 8)
     for i, (place, region, text) in enumerate(LIST_ITEMS):
-        c, r = divmod(i, 12)
+        c, r = divmod(i, 17)
         ix = lx + c * (colw + 14)
-        iy = by + 27 + r * 19.5
+        iy = by + 26 + r * 12.5
         n = i + 12
-        d.ellipse([ix, iy, ix + 13, iy + 13], fill=REGION_FILL[region])
+        d.ellipse([ix, iy, ix + 11, iy + 11], fill=REGION_FILL[region])
         s = str(n)
-        f = F(SANSB, 8)
-        d.text((ix + 6.5 - d.textlength(s, font=f) / 2, iy + 2), s, font=f, fill=WHITE)
-        d.text((ix + 17, iy + 1), place, font=F(SANSB, 8), fill=REGION_FILL[region])
-        pw = d.textlength(place, font=F(SANSB, 8))
-        one = text if len(text) < 88 else text
-        text_block(d, ix + 17, iy + 10, one, F(SANS, 8), (52, 60, 70), colw - 20, 9)
+        d.text((ix + 5.5 - d.textlength(s, font=F(SANSB, 7)) / 2, iy + 1.5), s,
+               font=F(SANSB, 7), fill=WHITE)
+        d.text((ix + 15, iy + 1), place, font=pf, fill=REGION_FILL[region])
+        tx0 = ix + 15 + d.textlength(place, font=pf) + 4
+        budget = ix + colw - tx0
+        t = text
+        while t and d.textlength(t, font=tf) > budget:
+            t = t.rsplit(" ", 1)[0]
+        if t != text:
+            t += "…"
+        d.text((tx0, iy + 1), t, font=tf, fill=(52, 60, 70))
     # Date check + sources
     dy = 962
     d.rectangle([12, dy, W - 12, dy + 30], outline=RED, width=1)

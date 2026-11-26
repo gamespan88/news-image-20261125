@@ -15,11 +15,14 @@ Tiangong, claimed mine strikes in the Strait of Hormuz, a claimed strike on
 the Ras Tanura refinery, Jerusalem judges urging that the Netanyahu bribery
 charge be dropped, the Cairo fuel blaze, Ofgem's 26% price-cap rise,
 Dhaka's 36% garment pay rise, the flooded Bogor gold mine and the Cartagena
-hostage rescue), a dot-matrix world map with pins 1–11, 24 further numbered
-stories, and a date-check box that keeps other days' news out.
+hostage rescue), a dot-matrix world map with pins 1–11, 34 further numbered
+stories — among them Wall Street's 1,100-point Dow reversal, the US
+leave-Iran alert, Britain's Russian-sabotage warning, Ukraine's sinking of
+a Russian corvette off Benghazi and the coalition strike on Hodeidah — and
+a date-check box that keeps other days' news out.
 
 Every story was verified against wire reporting of the day and carries an
-honesty label — OFFICIAL, CONFIRMED, REPORTED or CLAIM. 35 stories,
+honesty label — OFFICIAL, CONFIRMED, REPORTED or CLAIM. 45 stories,
 8 regions, all from Wednesday 25 November 2026.
 
 ## Layout of this repository
